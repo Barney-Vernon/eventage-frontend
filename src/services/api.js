@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  // This uses the Vercel environment variable, or falls back to localhost for local testing
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api', 
 });
 
 // Automatically attach token to every request
