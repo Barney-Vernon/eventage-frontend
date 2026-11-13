@@ -6,6 +6,8 @@ import Events from './pages/Events';
 import Clients from './pages/Clients';
 import Inventory from './pages/Inventory';
 import Invoices from './pages/Invoices';
+import Settings from './pages/Settings';
+import Users from './pages/Users';
 import VendorPortal from './pages/VendorPortal';
 import ClientPortal from './pages/ClientPortal';
 import Sidebar from './components/Sidebar';
@@ -77,7 +79,17 @@ function App() {
         <Route path="/events" element={<DashboardLayout><Events /></DashboardLayout>} />
         <Route path="/clients" element={<DashboardLayout><Clients /></DashboardLayout>} />
         <Route path="/inventory" element={<DashboardLayout><Inventory /></DashboardLayout>} />
-        <Route path="/invoices" element={<DashboardLayout><Invoices /></DashboardLayout>} />
+
+        {/* PROTECTED ROUTES: Only Admin can access these */}
+        <Route path="/invoices" element={
+          user?.role === 'ADMIN' ? <DashboardLayout><Invoices /></DashboardLayout> : <Navigate to="/dashboard" />
+        } />
+        <Route path="/settings" element={
+          user?.role === 'ADMIN' ? <DashboardLayout><Settings /></DashboardLayout> : <Navigate to="/dashboard" />
+        } />
+         <Route path="/users" element={
+          user?.role === 'ADMIN' ? <DashboardLayout><Users /></DashboardLayout> : <Navigate to="/dashboard" />
+        } />
       </Routes>
     </BrowserRouter>
   );
